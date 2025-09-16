@@ -1,0 +1,20 @@
+import(MASS)
+export(lasso)
+export(coop.lasso)
+export(group.lasso)
+export(tree.group.lasso)
+export(tree.coop.lasso)
+export(sparse.group.lasso)
+export(sparse.coop.lasso)
+useDynLib(scoop)
+importFrom("graphics", plot)
+importFrom("stats", fitted, predict, residuals, deviance)
+exportClasses(scoopfit, cvscoop)
+exportMethods(print       ,
+              plot        ,
+              fitted      ,
+              predict     ,
+              residuals   ,
+              deviance    ,
+              selection   ,
+              crossval)

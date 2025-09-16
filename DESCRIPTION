@@ -1,0 +1,11 @@
+Package: scoop
+Version: 0.2-1
+Date: 2011-xx-xx
+Title: Sparse cooperative regression
+Author: Julien Chiquet
+Maintainer: Julien Chiquet <julien.chiquet@genopole.cnrs.fr>
+Depends: MASS, methods
+URL: http://stat.genopole.cnrs.fr/logiciels/scoop
+Description: This package fits coop-Lasso, group-Lasso, tree-group Lasso and Lasso solution paths for linear regression and logistic regression. The cooperative-Lasso (in short coop-Lasso) may be viewed as a modification of the group-Lasso penalty that promotes sign coherence and that allows zeros within groups.
+License: GPL (>= 2)
+Packaged: 2011-09-16 15:51:26 UTC; jchiquet

@@ -1,0 +1,1 @@
+basal_tumor      example on the basal data set that compare logistic Coop-Lasso fit and logistic Group-Lasso on a selected number of probe sets. Cross-validation is performed and selected genes depicted.
