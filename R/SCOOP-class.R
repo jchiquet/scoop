@@ -10,14 +10,27 @@ SCOOP <- R6::R6Class(
   ##  
  
   private = list(
-     beta       = NA,
-     lambda     = NA,
-     group      = NA,
-     wk         = NA,
-     family     = NA,
-     penalty    = NA,
-     monitoring = NA,
-     formula    = NA
+     name          = NA,
+     formula       = NA,
+     beta          = NA,
+     ## model-related fields
+     family        = NA,
+     nloglik       = NA,
+     gradient      = NA,
+     ## model-related fields
+     penalty       = NA,
+     group         = NA,
+     lambda        = NA,
+     wk            = NA,
+     grp_norm      = NA,
+     pen_norm      = NA,
+     subgrad_norm  = NA,
+     subgrad_dual  = NA,
+     dual_norm     = NA,
+    ## optim-related fields
+     solver        = NA,
+     
+     monitoring    = NA,     
   ),
   
   ## ______________________________________________________
@@ -28,16 +41,6 @@ SCOOP <- R6::R6Class(
     data = NA,
      
     initialize = function(data, family) {
-      
-      nloglik   = switch(family,
-        "gaussian" = nloglik.gaussian,
-        "binomial" = nloglik.binomial),
-      
-        ## the gradient of the negative log-likelihood of the data-fitting term
-      gradient  = switch(family,
-        "gaussian" = gradient_gaussian,
-        "binomial" = gradient_binomial),
-
        
      },
 
