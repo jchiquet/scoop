@@ -1,3 +1,4 @@
+#' @export
 lasso <- function(x,
                   y,
                   family       = "gaussian",
@@ -30,6 +31,7 @@ lasso <- function(x,
                call         = match.call())
 }
 
+#' @export
 group.lasso <- function(x,
                         y,
                         group,
@@ -63,6 +65,7 @@ group.lasso <- function(x,
                call         = match.call())
 }
 
+#' @export
 coop.lasso <- function(x,y,
                        group,
                        family       = "gaussian",
@@ -96,6 +99,7 @@ coop.lasso <- function(x,y,
 
 }
 
+#' @export
 sparse.group.lasso <- function(x,y,
                                group,
                                family       = "gaussian",
@@ -129,6 +133,7 @@ sparse.group.lasso <- function(x,y,
 
 }
 
+#' @export
 sparse.coop.lasso <- function(x,y,
                               group,
                               family       = "gaussian",
@@ -162,6 +167,7 @@ sparse.coop.lasso <- function(x,y,
 
 }
 
+#' @export
 tree.group.lasso <- function(x,y,
                              group,
                              family       = "gaussian",
@@ -194,6 +200,7 @@ tree.group.lasso <- function(x,y,
 
 }
 
+#' @export
 tree.coop.lasso <- function(x,y,
                              group,
                              family       = "gaussian",

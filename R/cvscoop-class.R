@@ -1,3 +1,4 @@
+#' @export
 setClass("cvscoop",
    representation = representation(
      lambda     = "numeric",

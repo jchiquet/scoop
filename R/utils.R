@@ -128,8 +128,8 @@ findLambdaMaxTree <- function (x, y, pk, wk, pen, lambda0 = 100, eps=10e-8) {
   Ks  <- sapply(pk,length)
   pk <- unlist(pk)
   wk  <- unlist(rev(wk))
-  
-  ## l = - sous-gradient en 0, ie quand lambda est à l'infini = -Xty
+
+  ## sous-gradient en 0, ie quand lambda est à l'infini = -Xty
   l0 <- crossprod(y,x)
   
   ## si lambda est tel que les betas sont tous nuls

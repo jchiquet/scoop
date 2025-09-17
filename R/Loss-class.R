@@ -6,8 +6,8 @@ Loss <- R6::R6Class(
   )
 )
 
-MSELoss <- R6::R6Class(
-  classname = "MSELoss",
+MSE_Loss <- R6::R6Class(
+  classname = "MSE_Loss",
   inherit = Loss,
   public = list(
     initialize = function(data) {
@@ -19,8 +19,8 @@ MSELoss <- R6::R6Class(
   )
 )
 
-LogisticLoss <- R6::R6Class(
-  classname = "LogisticLoss",
+Logistic_Loss <- R6::R6Class(
+  classname = "Logistic_Loss",
   inherit = Loss,
   public = list(
     initialize = function(data) {

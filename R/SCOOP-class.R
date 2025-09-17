@@ -29,8 +29,7 @@ SCOOP <- R6::R6Class(
      dual_norm     = NA,
     ## optim-related fields
      solver        = NA,
-     
-     monitoring    = NA,     
+     monitoring    = NA   
   ),
   
   ## ______________________________________________________
@@ -134,7 +133,7 @@ SCOOP <- R6::R6Class(
     #' @field group vector of penalty grouping, when applicable
     grouping = function() private$group,
     #' @field family type of loss (aka family)
-    family = function() private$family,
+    family_ = function() private$family,
     #' @field penalty type of penalty function
     penalty_type = function() private$penalty,
     #' @field penalty_level vector of amounts of penalty applied (aka lambda)

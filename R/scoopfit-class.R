@@ -1,3 +1,4 @@
+#' @export
 setClass("scoopfit",
   representation = representation(
      coefficients  = "matrix",
@@ -12,6 +13,18 @@ setClass("scoopfit",
      call          = "call")
 )
 
+# exportClasses(scoopfit, cvscoop)
+# exportMethods(print       ,
+#               plot        ,
+#               fitted      ,
+#               predict     ,
+#               residuals   ,
+#               deviance    ,
+#               selection   ,
+#               crossval)
+
+
+#' @export
 setMethod("print", "scoopfit", definition =
    function(x, ...) {
      ncoef <- ncol(x@coefficients)
@@ -31,6 +44,7 @@ group.norm.unordered <- function(beta,group) {
   return(n2)
 }
 
+#' @export
 setMethod("plot", "scoopfit", definition =
    function(x, y,
             xvar = "lambda", yvar="coefficients",
@@ -79,12 +93,14 @@ setMethod("plot", "scoopfit", definition =
 )
 
 
+#' @export
 setMethod("fitted", "scoopfit", definition =
    function(object, ...) {
      return(predict(object))
    }
 )
 
+#' @export
 setMethod("predict", "scoopfit", definition =
    function (object, newx=NULL, ...)  {
 
@@ -117,6 +133,7 @@ setMethod("predict", "scoopfit", definition =
    }
 )
 
+#' @export
 setMethod("residuals", "scoopfit", definition =
    function(object, ...) {
      n <- length(object@lambda)
@@ -124,6 +141,7 @@ setMethod("residuals", "scoopfit", definition =
    }
 )
 
+#' @export
 setMethod("deviance", "scoopfit", definition =
    function(object, ...) {
 
@@ -144,6 +162,7 @@ setMethod("deviance", "scoopfit", definition =
 setGeneric("selection", function(object, sigma2=NULL)
            {standardGeneric("selection")})
 
+#' @export
 setMethod("selection", "scoopfit", definition =
    function(object, sigma2=NULL) {
      
@@ -203,6 +222,7 @@ setGeneric("crossval", function(object,
                                 verbose    = TRUE)
            {standardGeneric("crossval")})
 
+#' @export
 setMethod("crossval", "scoopfit", definition =
    function (object,
              K          = 10,
