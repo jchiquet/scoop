@@ -13,17 +13,6 @@ setClass("scoopfit",
      call          = "call")
 )
 
-# exportClasses(scoopfit, cvscoop)
-# exportMethods(print       ,
-#               plot        ,
-#               fitted      ,
-#               predict     ,
-#               residuals   ,
-#               deviance    ,
-#               selection   ,
-#               crossval)
-
-
 #' @export
 setMethod("print", "scoopfit", definition =
    function(x, ...) {

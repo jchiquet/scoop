@@ -20,6 +20,7 @@ Penalty <- R6::R6Class(
     g = NA
   ), 
   active = list(
+    name = function() {private$id},
     weights = function() {private$w},
     group = function() {private$g}
   )
@@ -32,6 +33,7 @@ Penalty_Lasso <- R6::R6Class(
   public = list(
     initialize = function(weights) {
       super$initialize(group = 1:length(weights), weights)
+      private$id <- "L1 (Lasso)"
     },
     norm      = function(theta) pen_norm_L1(theta, private$w),
     elt_norm  = function(theta) elt_norm_L1(theta),
@@ -47,6 +49,7 @@ Penalty_Bounded <- R6::R6Class(
   public = list(
     initialize = function(weights) {
       super$initialize(group = 1:length(weights), weights)
+      private$id <- "L-infty (Bounded)"
     },
     norm      = function(theta) pen_norm_LINF(theta, private$w),
     elt_norm  = function(theta) elt_norm_LINF(theta),
@@ -60,6 +63,10 @@ Penalty_GroupLasso <- R6::R6Class(
   classname = "Penalty_GroupLasso",
   inherit = Penalty,
   public = list(
+    initialize = function(group, weights) {
+      super$initialize(group = group, weights)
+      private$id <- "L1/L2 (Standard Group-Lasso)"
+    },
     norm      = function(theta) pen_norm_L1L2(theta, private$g, private$w),
     elt_norm  = function(theta) elt_norm_L1L2(theta, private$g),
     dual_norm = function(theta) dual_norm_L1L2(theta, private$g),
@@ -72,6 +79,10 @@ Penalty_GroupLassoInf <- R6::R6Class(
   classname = "Penalty_GroupLassoInf",
   inherit = Penalty,
   public = list(
+    initialize = function(group, weights) {
+      super$initialize(group = group, weights)
+      private$id <- "L1/LInfty (Variant of Group-Lasso)"
+    },
     norm      = function(theta) pen_norm_L1LINF(theta, private$g, private$w),
     elt_norm  = function(theta) elt_norm_L1LINF(theta, private$g),
     dual_norm = function(theta) dual_norm_L1LINF(theta, private$g),
@@ -84,6 +95,10 @@ Penalty_CoopLasso <- R6::R6Class(
   classname = "Penalty_CoopLasso",
   inherit = Penalty,
   public = list(
+    initialize = function(group, weights) {
+      super$initialize(group = group, weights)
+      private$id <- "L1/Signed-L2 (Cooperative-Lasso)"
+    },
     norm      = function(theta) pen_norm_COOP(theta, private$g, private$w),
     elt_norm  = function(theta) elt_norm_COOP(theta, private$g),
     dual_norm = function(theta) dual_norm_COOP(theta, private$g),

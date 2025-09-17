@@ -280,7 +280,7 @@ scoop <- function(x,
     ## Gaussian family
     if (family == "gaussian") {
       y.bar <- mean(y)
-      y <- y-y.bar
+      y <- y - y.bar
     }
     ## Binomial family
     if (family == "binomial") {
