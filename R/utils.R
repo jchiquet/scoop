@@ -30,20 +30,20 @@
   fit
 }
 
-nloglik_gaussian <- function(XtX, Xty, beta) {
+nloglik.gaussian <- function(XtX, Xty, beta) {
   return(.5 * crossprod(beta, crossprod(XtX, beta)) - crossprod(beta, Xty))
 }
 
-nloglik_binomial <-  function(X, y, beta) {
+nloglik.binomial <-  function(X, y, beta) {
   eta <- crossprod(t(X), beta)
   return(- sum( y * eta - log(1 + exp(eta))))
 }
 
-gradient_gaussian <- function(XtX, Xty, beta) {
+gradient.gaussian <- function(XtX, Xty, beta) {
   return(drop(crossprod(XtX,beta)) - Xty)
 }
 
-gradient_binomial <- function(X, y, beta) {
+gradient.binomial <- function(X, y, beta) {
   return(- crossprod(X,y - 1 /(1 + exp(-crossprod(t(X), beta)))))
 }
 

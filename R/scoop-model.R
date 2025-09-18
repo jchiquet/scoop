@@ -41,7 +41,7 @@ new.scoop.model <- function(family, penalty, optim.method) {
         "coop"  = function(x, g, wk) {sum(wk * coop.norm(x,g))} , NULL),
       
       ## the function to compute how much a non zero coefficient
-      ## is shrunhen in the subgradient term of the penalty (componentwisely)
+      ## is shrunken in the subgradient term of the penalty (componentwisely)
       subgrad.norm  = switch(penalty,
         "lasso" = function(x,pk=NULL) {abs(x)},
         "group" = group.norm.rep,

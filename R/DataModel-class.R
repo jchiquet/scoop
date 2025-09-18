@@ -9,7 +9,7 @@ DataModel <- R6::R6Class(
     initialize = function(covariates, outcome, group, intercept=TRUE, standardize=TRUE) {
 
       if (is.null(colnames(covariates))) colnames(covariates) <- 1:ncol(covariates)
-      self$data         <- list(X = covariates, y = outcome, g = group)
+      self$data  <- list(X = covariates, y = outcome, g = group)
 
       ## group labels MUST start from 1
       ## sorting the groups and the columns of the design matrix
@@ -66,6 +66,9 @@ GaussianModel <- R6::R6Class(
       attr(res, "grad") <- crossprod(self$data$X, y_hat - self$data$y)
       res
     }
+  ),
+  active = list(
+    name = function() "Gaussian response (Linear Regression)"
   )
 )
 
@@ -80,6 +83,8 @@ BinaryModel <- R6::R6Class(
       attr(res, "grad") <- crossprod(self$data$X, .sigmoid(eta) - self$data$y)
       res
     }
+  ),
+  active = list(
+    name = function() "Binary response (Logistic Regression)"
   )
 )
-

@@ -6,6 +6,9 @@ cat("\nExecuting the whole script is a matter of minutes... \n")
 cat("\nMODEL FITTING \n")
 
 cat("\nComputing sparse group-Lasso path...")
+lasso <- lasso(x, y, group, family="binomial")
+
+cat("\nComputing sparse group-Lasso path...")
 spglasso <- sparse.group.lasso(x, y, group, family="binomial")
 
 cat("\nComputing group-Lasso path...")

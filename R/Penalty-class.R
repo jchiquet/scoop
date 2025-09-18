@@ -2,7 +2,8 @@ Penalty <- R6::R6Class(
   classname = "Penalty",
   public = list(
     initialize = function(group, weights) {
-      private$g <- tabulate(group)
+      stopifnot(!is.unsorted(group))
+      private$s <- tabulate(group)
       private$w <- weights
     },
     ## function to compute penalty term (sum of the weighted group norm)
@@ -16,13 +17,14 @@ Penalty <- R6::R6Class(
     proximal = function() {}
   ),
   private = list(
-    w = NA,
-    g = NA
+    id = NA, # penalty name
+    w  = NA, # group weights
+    s  = NA  # group sizes
   ), 
   active = list(
     name = function() {private$id},
     weights = function() {private$w},
-    group = function() {private$g}
+    group_size = function() {private$s}
   )
 )
 
@@ -33,7 +35,7 @@ Penalty_Lasso <- R6::R6Class(
   public = list(
     initialize = function(weights) {
       super$initialize(group = 1:length(weights), weights)
-      private$id <- "L1 (Lasso)"
+      private$id <- "L1 norm (Lasso)"
     },
     norm      = function(theta) pen_norm_L1(theta, private$w),
     elt_norm  = function(theta) elt_norm_L1(theta),
@@ -49,7 +51,7 @@ Penalty_Bounded <- R6::R6Class(
   public = list(
     initialize = function(weights) {
       super$initialize(group = 1:length(weights), weights)
-      private$id <- "L-infty (Bounded)"
+      private$id <- "L-infinity norm (Bounded)"
     },
     norm      = function(theta) pen_norm_LINF(theta, private$w),
     elt_norm  = function(theta) elt_norm_LINF(theta),
@@ -65,12 +67,12 @@ Penalty_GroupLasso <- R6::R6Class(
   public = list(
     initialize = function(group, weights) {
       super$initialize(group = group, weights)
-      private$id <- "L1/L2 (Standard Group-Lasso)"
+      private$id <- "L1/L2 mixed-norm (Standard Group-Lasso)"
     },
-    norm      = function(theta) pen_norm_L1L2(theta, private$g, private$w),
-    elt_norm  = function(theta) elt_norm_L1L2(theta, private$g),
-    dual_norm = function(theta) dual_norm_L1L2(theta, private$g),
-    proximal  = function(theta, lambda) proximal_L1L2(theta, private$g, private$w, lambda)
+    norm      = function(theta) pen_norm_L1L2(theta, private$s, private$w),
+    elt_norm  = function(theta) elt_norm_L1L2(theta, private$s),
+    dual_norm = function(theta) dual_norm_L1L2(theta, private$s),
+    proximal  = function(theta, lambda) proximal_L1L2(theta, private$s, private$w, lambda)
   )
 )
 
@@ -81,12 +83,12 @@ Penalty_GroupLassoInf <- R6::R6Class(
   public = list(
     initialize = function(group, weights) {
       super$initialize(group = group, weights)
-      private$id <- "L1/LInfty (Variant of Group-Lasso)"
+      private$id <- "L1/LInf mixed-norm (Group-Lasso variant)"
     },
-    norm      = function(theta) pen_norm_L1LINF(theta, private$g, private$w),
-    elt_norm  = function(theta) elt_norm_L1LINF(theta, private$g),
-    dual_norm = function(theta) dual_norm_L1LINF(theta, private$g),
-    proximal  = function(theta, lambda) proximal_L1LINF(theta, private$g, private$w, lambda)
+    norm      = function(theta) pen_norm_L1LINF(theta, private$s, private$w),
+    elt_norm  = function(theta) elt_norm_L1LINF(theta, private$s),
+    dual_norm = function(theta) dual_norm_L1LINF(theta, private$s),
+    proximal  = function(theta, lambda) proximal_L1LINF(theta, private$s, private$w, lambda)
   )
 )
 
@@ -99,9 +101,9 @@ Penalty_CoopLasso <- R6::R6Class(
       super$initialize(group = group, weights)
       private$id <- "L1/Signed-L2 (Cooperative-Lasso)"
     },
-    norm      = function(theta) pen_norm_COOP(theta, private$g, private$w),
-    elt_norm  = function(theta) elt_norm_COOP(theta, private$g),
-    dual_norm = function(theta) dual_norm_COOP(theta, private$g),
-    proximal  = function(theta, lambda) proximal_COOP(theta, private$g, private$w, lambda)    
+    norm      = function(theta) pen_norm_COOP(theta, private$s, private$w),
+    elt_norm  = function(theta) elt_norm_COOP(theta, private$s),
+    dual_norm = function(theta) dual_norm_COOP(theta, private$s),
+    proximal  = function(theta, lambda) proximal_COOP(theta, private$s, private$w, lambda)    
   )
 )
