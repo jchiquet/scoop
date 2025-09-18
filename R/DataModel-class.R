@@ -1,49 +1,47 @@
 DataModel <- R6::R6Class(
   classname = "DataModel",
   private = list(
-    transform = NA,
     names     = NA
   ),
   public = list(
     ## model-related fields
-    data = NA,  
-    loss = NA,
-    initialize = function(covariates, response, group, intercept, standardize) {
+    data = NA,
+    initialize = function(covariates, outcome, group, intercept=TRUE, standardize=TRUE) {
 
-      if (is.null(colnames(x))) colnames(x) <- 1:ncol(x)
-      self$transform <- list(intercept = intercept, standardize = standardize)
-      self$data      <- list(x = covariates, y = responses, g = group)
-      self$pretreatment()    
+      if (is.null(colnames(covariates))) colnames(covariates) <- 1:ncol(covariates)
+      self$data         <- list(X = covariates, y = outcome, g = group)
 
-    },
-    pretreatment = function() {
-      if (private$transform$intercept) {
-        private$names <- c("intercept", colnames(self$data$x))
-        x_bar <- colMeans(self$data$x)
-        self$data$x <- scale(self$data$x, x_bar, FALSE) 
-        attribute(self$data$x, "x_bar") <- x_bar
-      } else {
-        private$names <- colnames(self$data$x)
-      }
-      
-      ## normalizing the data
-      if (private$transform$standardize) {
-        norm   <- sqrt(drop(colSums(data$x^2)))
-        self$data$x <- scale(self$data$x, FALSE, norm)
-        attribute(data$x, "norm") <- norm
-      }
-      
       ## group labels MUST start from 1
       ## sorting the groups and the columns of the design matrix
       self$data$o <- order(self$data$g,decreasing=FALSE)
-      self$data$x <- self$data$x[, self$data$o]
-      self$data$g <- self$data$group[self$data$o]
+      self$data$X <- self$data$X[, self$data$o]
+      self$data$g <- self$data$g[self$data$o]
       self$data$s <- tabulate(self$data$g)
+      
+      if (intercept) {
+        private$names <- c("intercept", colnames(self$data$X))
+        x_bar <- colMeans(self$data$X)
+        self$data$X <- scale(self$data$X, x_bar, FALSE)
+        attr(self$data$X, "x_bar") <- x_bar
+      } else {
+        private$names <- colnames(self$data$X)
+      }
+      
+      ## normalizing the data
+      if (standardize) {
+        norm   <- sqrt(drop(colSums(self$data$X^2)))
+        self$data$X <- scale(self$data$X, FALSE, norm)
+        attr(self$data$X, "norm") <- norm
+      }
+
     }
   ), 
   active = list(
-    d = function() ncol(self$data$x),
-    n = function() nrow(self$data$x),
+    d = function() ncol(self$data$X),
+    n = function() nrow(self$data$X),
+    k = function() length(self$data$s),
+    has_intercept = function() !is.null(attr(self$data$X, "x_bar")),
+    is_standardized = function() !is.null(attr(self$data$X, "norm")),
     varnames = function() private$names
   )
 )
@@ -53,18 +51,19 @@ GaussianModel <- R6::R6Class(
   classname = "GaussianModel",
   inherit = DataModel,
   public = list(
-    pretreatment = function() {
-      super$pretreatment()
-      self$data$Xty <- crossprod(X,y)
-      if (private$transform$intercept) {
+    initialize = function(covariates, outcome, group, 
+                          intercept = TRUE, standardize = TRUE) {
+      super$initialize(covariates, outcome, group, intercept, standardize)
+      if (intercept) {
         y_bar <- mean(self$data$y)
         self$data$y <- self$data$y - y_bar
-        attribute(self$data$y, "y_bar") <- y_bar
+        attr(self$data$y, "y_bar") <- y_bar
       }
     },
     loss = function(theta) {
-      res <- .5 * mean( (selfdata$y - crossprod(self$data$x, theta))^2 )
-      attributes(res, "grad") <- drop(crossprod(self$data$XtX, theta)) - self$data$Xty
+      y_hat <- self$data$X %*% theta
+      res <- .5 * mean( (self$data$y - y_hat)^2 )
+      attr(res, "grad") <- crossprod(self$data$X, y_hat - self$data$y)
       res
     }
   )
@@ -76,9 +75,9 @@ BinaryModel <- R6::R6Class(
   inherit = DataModel,
   public = list(
     loss = function(theta) {
-      eta <- crossprod(t(data$X), theta)
-      res <- -sum( data$y * eta - log(1 + exp(eta)))
-      attributes(res, "grad") <- -crossprod(data$X, data$y - .sigmoid(eta) )
+      eta <- self$data$X %*% theta
+      res <- sum(log(1 + exp(eta)) - self$data$y * eta)
+      attr(res, "grad") <- crossprod(self$data$X, .sigmoid(eta) - self$data$y)
       res
     }
   )
