@@ -7,6 +7,58 @@ using namespace arma;
 
 #define ZERO 2e-16 // practical zero
 
+// =====================================================
+// Normes de groupe et coopératives
+// =====================================================
+
+// [[Rcpp::export]]
+arma::vec groupnorm(const arma::vec& beta, const arma::ivec& pk) {
+  int K = pk.n_elem;
+  arma::vec norm(K, arma::fill::zeros);
+  
+  int ind = 0;
+  for (int k = 0; k < K; k++) {
+    arma::vec sub = beta.subvec(ind, ind + pk[k] - 1);
+    norm[k] = arma::norm(sub, 2);
+    ind += pk[k];
+  }
+  return norm;
+}
+
+// [[Rcpp::export]]
+arma::vec coopnorm(const arma::vec& beta, const arma::ivec& pk) {
+  int K = pk.n_elem;
+  arma::vec norm(K, arma::fill::zeros);
+  
+  int ind = 0;
+  for (int k = 0; k < K; k++) {
+    arma::vec sub = beta.subvec(ind, ind + pk[k] - 1);
+    double norm_pos = arma::norm(arma::clamp(sub, 0, arma::datum::inf), 2);
+    double norm_neg = arma::norm(arma::clamp(-sub, 0, arma::datum::inf), 2);
+    norm[k] = norm_pos + norm_neg;
+    ind += pk[k];
+  }
+  return norm;
+}
+
+// Retourne un vecteur de taille p avec la norme du groupe répété
+
+// [[Rcpp::export]]
+arma::vec groupnormrep(const arma::vec& beta, const arma::ivec& pk) {
+  int p = beta.n_elem;
+  arma::vec norm(p, arma::fill::zeros);
+  
+  int ind = 0;
+  for (int k = 0; k < pk.n_elem; k++) {
+    arma::vec sub = beta.subvec(ind, ind + pk[k] - 1);
+    double nrm = arma::norm(sub, 2);
+    norm.subvec(ind, ind + pk[k] - 1).fill(nrm);
+    ind += pk[k];
+  }
+  return norm;
+}
+
+
 // ______________________________________________________
 // L1 NORM A.K.A LASSO
 

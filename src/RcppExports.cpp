@@ -11,6 +11,140 @@ Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
 Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
+// ISTA_LM
+void ISTA_LM(int p, int H, int K, const arma::ivec& Ks, const arma::ivec& pk, const arma::mat& XtX, const arma::vec& Xty, const arma::vec& lambda, double L, int max_it, double eps, arma::vec& x0, arma::vec& xk, int penalty, int& iter);
+RcppExport SEXP _scoop_ISTA_LM(SEXP pSEXP, SEXP HSEXP, SEXP KSEXP, SEXP KsSEXP, SEXP pkSEXP, SEXP XtXSEXP, SEXP XtySEXP, SEXP lambdaSEXP, SEXP LSEXP, SEXP max_itSEXP, SEXP epsSEXP, SEXP x0SEXP, SEXP xkSEXP, SEXP penaltySEXP, SEXP iterSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< int >::type p(pSEXP);
+    Rcpp::traits::input_parameter< int >::type H(HSEXP);
+    Rcpp::traits::input_parameter< int >::type K(KSEXP);
+    Rcpp::traits::input_parameter< const arma::ivec& >::type Ks(KsSEXP);
+    Rcpp::traits::input_parameter< const arma::ivec& >::type pk(pkSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type XtX(XtXSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type Xty(XtySEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type lambda(lambdaSEXP);
+    Rcpp::traits::input_parameter< double >::type L(LSEXP);
+    Rcpp::traits::input_parameter< int >::type max_it(max_itSEXP);
+    Rcpp::traits::input_parameter< double >::type eps(epsSEXP);
+    Rcpp::traits::input_parameter< arma::vec& >::type x0(x0SEXP);
+    Rcpp::traits::input_parameter< arma::vec& >::type xk(xkSEXP);
+    Rcpp::traits::input_parameter< int >::type penalty(penaltySEXP);
+    Rcpp::traits::input_parameter< int& >::type iter(iterSEXP);
+    ISTA_LM(p, H, K, Ks, pk, XtX, Xty, lambda, L, max_it, eps, x0, xk, penalty, iter);
+    return R_NilValue;
+END_RCPP
+}
+// FISTA_LM
+void FISTA_LM(int p, int H, int K, const arma::ivec& Ks, const arma::ivec& pk, const arma::mat& XtX, const arma::vec& Xty, const arma::vec& lambda, double L, int max_it, double eps, arma::vec& x0, arma::vec& xk, int penalty, int& iter);
+RcppExport SEXP _scoop_FISTA_LM(SEXP pSEXP, SEXP HSEXP, SEXP KSEXP, SEXP KsSEXP, SEXP pkSEXP, SEXP XtXSEXP, SEXP XtySEXP, SEXP lambdaSEXP, SEXP LSEXP, SEXP max_itSEXP, SEXP epsSEXP, SEXP x0SEXP, SEXP xkSEXP, SEXP penaltySEXP, SEXP iterSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< int >::type p(pSEXP);
+    Rcpp::traits::input_parameter< int >::type H(HSEXP);
+    Rcpp::traits::input_parameter< int >::type K(KSEXP);
+    Rcpp::traits::input_parameter< const arma::ivec& >::type Ks(KsSEXP);
+    Rcpp::traits::input_parameter< const arma::ivec& >::type pk(pkSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type XtX(XtXSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type Xty(XtySEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type lambda(lambdaSEXP);
+    Rcpp::traits::input_parameter< double >::type L(LSEXP);
+    Rcpp::traits::input_parameter< int >::type max_it(max_itSEXP);
+    Rcpp::traits::input_parameter< double >::type eps(epsSEXP);
+    Rcpp::traits::input_parameter< arma::vec& >::type x0(x0SEXP);
+    Rcpp::traits::input_parameter< arma::vec& >::type xk(xkSEXP);
+    Rcpp::traits::input_parameter< int >::type penalty(penaltySEXP);
+    Rcpp::traits::input_parameter< int& >::type iter(iterSEXP);
+    FISTA_LM(p, H, K, Ks, pk, XtX, Xty, lambda, L, max_it, eps, x0, xk, penalty, iter);
+    return R_NilValue;
+END_RCPP
+}
+// ISTA_LRM
+void ISTA_LRM(int p, int H, int K, const arma::ivec& Ks, const arma::ivec& pk, int n, const arma::mat& X, const arma::vec& y, const arma::vec& lambda, double L0, int max_it, double eps, arma::vec& x0, arma::vec& xk, int penalty, int& iter);
+RcppExport SEXP _scoop_ISTA_LRM(SEXP pSEXP, SEXP HSEXP, SEXP KSEXP, SEXP KsSEXP, SEXP pkSEXP, SEXP nSEXP, SEXP XSEXP, SEXP ySEXP, SEXP lambdaSEXP, SEXP L0SEXP, SEXP max_itSEXP, SEXP epsSEXP, SEXP x0SEXP, SEXP xkSEXP, SEXP penaltySEXP, SEXP iterSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< int >::type p(pSEXP);
+    Rcpp::traits::input_parameter< int >::type H(HSEXP);
+    Rcpp::traits::input_parameter< int >::type K(KSEXP);
+    Rcpp::traits::input_parameter< const arma::ivec& >::type Ks(KsSEXP);
+    Rcpp::traits::input_parameter< const arma::ivec& >::type pk(pkSEXP);
+    Rcpp::traits::input_parameter< int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type X(XSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type y(ySEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type lambda(lambdaSEXP);
+    Rcpp::traits::input_parameter< double >::type L0(L0SEXP);
+    Rcpp::traits::input_parameter< int >::type max_it(max_itSEXP);
+    Rcpp::traits::input_parameter< double >::type eps(epsSEXP);
+    Rcpp::traits::input_parameter< arma::vec& >::type x0(x0SEXP);
+    Rcpp::traits::input_parameter< arma::vec& >::type xk(xkSEXP);
+    Rcpp::traits::input_parameter< int >::type penalty(penaltySEXP);
+    Rcpp::traits::input_parameter< int& >::type iter(iterSEXP);
+    ISTA_LRM(p, H, K, Ks, pk, n, X, y, lambda, L0, max_it, eps, x0, xk, penalty, iter);
+    return R_NilValue;
+END_RCPP
+}
+// FISTA_LRM
+void FISTA_LRM(int p, int H, int K, const arma::ivec& Ks, const arma::ivec& pk, int n, const arma::mat& X, const arma::vec& y, const arma::vec& lambda, double L0, int max_it, double eps, arma::vec& x0, arma::vec& xk, int penalty, int& iter);
+RcppExport SEXP _scoop_FISTA_LRM(SEXP pSEXP, SEXP HSEXP, SEXP KSEXP, SEXP KsSEXP, SEXP pkSEXP, SEXP nSEXP, SEXP XSEXP, SEXP ySEXP, SEXP lambdaSEXP, SEXP L0SEXP, SEXP max_itSEXP, SEXP epsSEXP, SEXP x0SEXP, SEXP xkSEXP, SEXP penaltySEXP, SEXP iterSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< int >::type p(pSEXP);
+    Rcpp::traits::input_parameter< int >::type H(HSEXP);
+    Rcpp::traits::input_parameter< int >::type K(KSEXP);
+    Rcpp::traits::input_parameter< const arma::ivec& >::type Ks(KsSEXP);
+    Rcpp::traits::input_parameter< const arma::ivec& >::type pk(pkSEXP);
+    Rcpp::traits::input_parameter< int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type X(XSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type y(ySEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type lambda(lambdaSEXP);
+    Rcpp::traits::input_parameter< double >::type L0(L0SEXP);
+    Rcpp::traits::input_parameter< int >::type max_it(max_itSEXP);
+    Rcpp::traits::input_parameter< double >::type eps(epsSEXP);
+    Rcpp::traits::input_parameter< arma::vec& >::type x0(x0SEXP);
+    Rcpp::traits::input_parameter< arma::vec& >::type xk(xkSEXP);
+    Rcpp::traits::input_parameter< int >::type penalty(penaltySEXP);
+    Rcpp::traits::input_parameter< int& >::type iter(iterSEXP);
+    FISTA_LRM(p, H, K, Ks, pk, n, X, y, lambda, L0, max_it, eps, x0, xk, penalty, iter);
+    return R_NilValue;
+END_RCPP
+}
+// groupnorm
+arma::vec groupnorm(const arma::vec& beta, const arma::ivec& pk);
+RcppExport SEXP _scoop_groupnorm(SEXP betaSEXP, SEXP pkSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const arma::vec& >::type beta(betaSEXP);
+    Rcpp::traits::input_parameter< const arma::ivec& >::type pk(pkSEXP);
+    rcpp_result_gen = Rcpp::wrap(groupnorm(beta, pk));
+    return rcpp_result_gen;
+END_RCPP
+}
+// coopnorm
+arma::vec coopnorm(const arma::vec& beta, const arma::ivec& pk);
+RcppExport SEXP _scoop_coopnorm(SEXP betaSEXP, SEXP pkSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const arma::vec& >::type beta(betaSEXP);
+    Rcpp::traits::input_parameter< const arma::ivec& >::type pk(pkSEXP);
+    rcpp_result_gen = Rcpp::wrap(coopnorm(beta, pk));
+    return rcpp_result_gen;
+END_RCPP
+}
+// groupnormrep
+arma::vec groupnormrep(const arma::vec& beta, const arma::ivec& pk);
+RcppExport SEXP _scoop_groupnormrep(SEXP betaSEXP, SEXP pkSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const arma::vec& >::type beta(betaSEXP);
+    Rcpp::traits::input_parameter< const arma::ivec& >::type pk(pkSEXP);
+    rcpp_result_gen = Rcpp::wrap(groupnormrep(beta, pk));
+    return rcpp_result_gen;
+END_RCPP
+}
 // elt_norm_L1
 arma::vec elt_norm_L1(arma::vec x);
 RcppExport SEXP _scoop_elt_norm_L1(SEXP xSEXP) {
@@ -259,17 +393,14 @@ BEGIN_RCPP
 END_RCPP
 }
 
-RcppExport void FISTA_LM(void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *);
-RcppExport void FISTA_LRM(void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *);
-RcppExport void ISTA_LM(void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *);
-RcppExport void ISTA_LRM(void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *, void *);
-RcppExport void coopnorm(void *, void *, void *, void *, void *);
-RcppExport void groupnorm(void *, void *, void *, void *, void *);
-RcppExport void groupnormrep(void *, void *, void *, void *, void *);
-RcppExport void proximal_tree_coo_standalone(void *, void *, void *, void *, void *, void *, void *, void *);
-RcppExport void proximal_tree_grp_standalone(void *, void *, void *, void *, void *, void *, void *, void *);
-
 static const R_CallMethodDef CallEntries[] = {
+    {"_scoop_ISTA_LM", (DL_FUNC) &_scoop_ISTA_LM, 15},
+    {"_scoop_FISTA_LM", (DL_FUNC) &_scoop_FISTA_LM, 15},
+    {"_scoop_ISTA_LRM", (DL_FUNC) &_scoop_ISTA_LRM, 16},
+    {"_scoop_FISTA_LRM", (DL_FUNC) &_scoop_FISTA_LRM, 16},
+    {"_scoop_groupnorm", (DL_FUNC) &_scoop_groupnorm, 2},
+    {"_scoop_coopnorm", (DL_FUNC) &_scoop_coopnorm, 2},
+    {"_scoop_groupnormrep", (DL_FUNC) &_scoop_groupnormrep, 2},
     {"_scoop_elt_norm_L1", (DL_FUNC) &_scoop_elt_norm_L1, 1},
     {"_scoop_pen_norm_L1", (DL_FUNC) &_scoop_pen_norm_L1, 2},
     {"_scoop_dual_norm_L1", (DL_FUNC) &_scoop_dual_norm_L1, 1},
@@ -290,15 +421,6 @@ static const R_CallMethodDef CallEntries[] = {
     {"_scoop_pen_norm_COOP", (DL_FUNC) &_scoop_pen_norm_COOP, 3},
     {"_scoop_dual_norm_COOP", (DL_FUNC) &_scoop_dual_norm_COOP, 2},
     {"_scoop_proximal_COOP", (DL_FUNC) &_scoop_proximal_COOP, 4},
-    {"FISTA_LM",                     (DL_FUNC) &FISTA_LM,                     15},
-    {"FISTA_LRM",                    (DL_FUNC) &FISTA_LRM,                    16},
-    {"ISTA_LM",                      (DL_FUNC) &ISTA_LM,                      15},
-    {"ISTA_LRM",                     (DL_FUNC) &ISTA_LRM,                     16},
-    {"coopnorm",                     (DL_FUNC) &coopnorm,                      5},
-    {"groupnorm",                    (DL_FUNC) &groupnorm,                     5},
-    {"groupnormrep",                 (DL_FUNC) &groupnormrep,                  5},
-    {"proximal_tree_coo_standalone", (DL_FUNC) &proximal_tree_coo_standalone,  8},
-    {"proximal_tree_grp_standalone", (DL_FUNC) &proximal_tree_grp_standalone,  8},
     {NULL, NULL, 0}
 };
 

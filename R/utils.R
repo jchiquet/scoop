@@ -47,72 +47,72 @@ gradient.binomial <- function(X, y, beta) {
   return(- crossprod(X,y - 1 /(1 + exp(-crossprod(t(X), beta)))))
 }
 
-group.norm <- function(x,g) {
-  p <- length(x)
-  K <- length(g)
-  return(c(.C("groupnorm",
-              as.integer(p),
-              as.integer(K),
-              as.integer(g),
-              as.double(x),
-              out=as.double(rep(0,K))
-              ##,PACKAGE="scoop"
-              ))$out)
-}
+# group.norm <- function(x,g) {
+#   p <- length(x)
+#   K <- length(g)
+#   return(c(.C("groupnorm",
+#               as.integer(p),
+#               as.integer(K),
+#               as.integer(g),
+#               as.double(x),
+#               out=as.double(rep(0,K))
+#               ##,PACKAGE="scoop"
+#               ))$out)
+# }
 
-group.norm.rep <- function(x,g) {
-  p <- length(x)
-  K <- length(g)
-  return(c(.C("groupnormrep",
-              as.integer(p),
-              as.integer(K),
-              as.integer(g),
-              as.double(x),
-              out=as.double(rep(0,p))
-              #,PACKAGE="scoop"
-              ))$out)
-}
+# group.norm.rep <- function(x,g) {
+#   p <- length(x)
+#   K <- length(g)
+#   return(c(.C("groupnormrep",
+#               as.integer(p),
+#               as.integer(K),
+#               as.integer(g),
+#               as.double(x),
+#               out=as.double(rep(0,p))
+#               #,PACKAGE="scoop"
+#               ))$out)
+# }
 
-coop.norm <- function(x,g) {
-  p <- length(x)
-  K <- length(g)
-  return(c(.C("coopnorm",
-              as.integer(p),
-              as.integer(K),
-              as.integer(g),
-              as.double(x),
-              out=as.double(rep(0,K))
-              #,PACKAGE="scoop"
-              ))$out)
-}
+# coop.norm <- function(x,g) {
+#   p <- length(x)
+#   K <- length(g)
+#   return(c(.C("coopnorm",
+#               as.integer(p),
+#               as.integer(K),
+#               as.integer(g),
+#               as.double(x),
+#               out=as.double(rep(0,K))
+#               #,PACKAGE="scoop"
+#               ))$out)
+# }
 
 coop.norm.rep <- function(x,g) {
   return(rep(coop.norm(x,g),g))
 }
 
-proximal.tree.group <- function(u, lambda, tpk, Ks) {
-  return(c(.C("proximal_tree_grp_standalone",
-              as.integer(length(u)),
-              as.integer(length(Ks)),
-              as.integer(length(tpk)),
-              as.integer(Ks),
-              as.integer(tpk),
-              as.double(lambda),
-              as.double(1),              
-              out=as.double(u)))$out)
-}
-
-proximal.tree.coop <- function(u, lambda, tpk, Ks) {
-  return(c(.C("proximal_tree_coo_standalone",
-              as.integer(length(u)),
-              as.integer(length(Ks)),
-              as.integer(length(tpk)),
-              as.integer(Ks),
-              as.integer(tpk),
-              as.double(lambda),
-              as.double(1),              
-              out=as.double(u)))$out)
-}
+# proximal.tree.group <- function(u, lambda, tpk, Ks) {
+#   return(c(.C("proximal_tree_grp_standalone",
+#               as.integer(length(u)),
+#               as.integer(length(Ks)),
+#               as.integer(length(tpk)),
+#               as.integer(Ks),
+#               as.integer(tpk),
+#               as.double(lambda),
+#               as.double(1),              
+#               out=as.double(u)))$out)
+# }
+# 
+# proximal.tree.coop <- function(u, lambda, tpk, Ks) {
+#   return(c(.C("proximal_tree_coo_standalone",
+#               as.integer(length(u)),
+#               as.integer(length(Ks)),
+#               as.integer(length(tpk)),
+#               as.integer(Ks),
+#               as.integer(tpk),
+#               as.double(lambda),
+#               as.double(1),              
+#               out=as.double(u)))$out)
+# }
 
 ## TREE-STRUCTURED GROUP LASSO
 ## Finding the minimal value of lambda which zeroes everything
