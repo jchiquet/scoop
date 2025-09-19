@@ -63,16 +63,16 @@ bfgs <- function(model, x0, fx, fy, lambda, pk, wk, lower=-Inf, upper=+Inf, L0, 
   }
   
   res <- optim(x0, method="L-BFGS-B",
-               fn     = L,
-               gr     = switch(model@penalty, "lasso"=dL, "group"=dL, "coop"=dL.coop, NULL),
-               fx     = fx,
-               fy     = fy,
-               lambda = lambda,
-               pk     = pk,
-               wk     = wk,
-               lower  = lower,
-               upper  = upper,
-               control= list(pgtol=eps/length(x0), factr=eps*length(x0), maxit=50))
+               fn      = L,
+               gr      = switch(model@penalty, "lasso"=dL, "group"=dL, "coop"=dL.coop, NULL),
+               fx      = fx,
+               fy      = fy,
+               lambda  = lambda,
+               pk      = pk,
+               wk      = wk,
+               lower   = lower,
+               upper   = upper,
+               control = list(pgtol=eps/length(x0), factr=eps*length(x0), maxit=50))
   i <- res$counts[1]
   names(i) <- NULL
   return(list(i=i,xk=res$par))

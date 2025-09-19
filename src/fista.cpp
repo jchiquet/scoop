@@ -11,9 +11,6 @@ using namespace arma;
 
 // [[Rcpp::export]]
 void ISTA_LM(
-  int p,
-  int H,
-  int K,
   const arma::ivec& Ks,
   const arma::ivec& pk,
   const arma::mat& XtX,
@@ -30,34 +27,31 @@ void ISTA_LM(
   double delta = 2 * eps;
   
   while ((delta > eps) && (iter < max_it)) {
-    // u = x0 - (XtX * x0 - Xty)/L
+    
     xk = x0 - (XtX * x0 - Xty) / L;
     
     // proximal operator selon le penalty
     switch (penalty) {
       case 1: proximal_las(lambda, L, xk); break;
-      case 2: proximal_grp(p, K, pk, lambda, L, xk); break;
-      case 3: proximal_coo(p, K, pk, lambda, L, xk); break;
-      case 4: proximal_tree_grp(p, H, K, Ks, pk, lambda, L, xk); break;
-      case 5: proximal_tree_coo(p, H, K, Ks, pk, lambda, L, xk); break;
+      case 2: proximal_grp(lambda, L, xk, pk); break;
+      case 3: proximal_coo(lambda, L, xk, pk); break;
+      case 4: proximal_tree_grp(Ks, lambda, L, xk, pk); break;
+      case 5: proximal_tree_coo(Ks, lambda, L, xk, pk); break;
     }
     
-    // calcul de la différence
+    // assess convergence
     delta = arma::norm(x0 - xk, 2);
     
-    // mise à jour
+    // parameter update
     x0 = xk;
     iter++;
     
-    R_CheckUserInterrupt(); // si tu compiles toujours avec Rcpp
+    R_CheckUserInterrupt();
   }
 }
 
 // [[Rcpp::export]]
 void FISTA_LM(
-  int p,
-  int H,
-  int K,
   const arma::ivec& Ks,
   const arma::ivec& pk,
   const arma::mat& XtX,
@@ -76,28 +70,26 @@ void FISTA_LM(
   arma::vec s = x0;
   
   while ((delta > eps) && (iter < max_it)) {
-    // u = s - (XtX*s - Xty)/L
+    
     xk = s - (XtX * s - Xty) / L;
     
-    // proximal
+    // apply proximal operator
     switch (penalty) {
       case 1: proximal_las(lambda, L, xk); break;
-      case 2: proximal_grp(p, K, pk, lambda, L, xk); break;
-      case 3: proximal_coo(p, K, pk, lambda, L, xk); break;
-      case 4: proximal_tree_grp(p, H, K, Ks, pk, lambda, L, xk); break;
-      case 5: proximal_tree_coo(p, H, K, Ks, pk, lambda, L, xk); break;
+      case 2: proximal_grp(lambda, L, xk, pk); break;
+      case 3: proximal_coo(lambda, L, xk, pk); break;
+      case 4: proximal_tree_grp(Ks, lambda, L, xk, pk); break;
+      case 5: proximal_tree_coo(Ks, lambda, L, xk, pk); break;
     }
     
-    // mise à jour t
+    // FISTA auxiliary variables 
     tk = 0.5 * (1 + std::sqrt(1 + 4 * t0 * t0));
-    
-    // mise à jour yk
     s = xk + (t0 - 1.0) / tk * (xk - x0);
     
-    // delta
+    // Convergence
     delta = arma::norm(x0 - xk, 2);
     
-    // update
+    // parameters update
     t0 = tk;
     x0 = xk;
     iter++;
@@ -110,14 +102,10 @@ void FISTA_LM(
 
 // [[Rcpp::export]]
 void ISTA_LRM(
-  int p,
-  int H,
-  int K,
   const arma::ivec& Ks,
   const arma::ivec& pk,
-  int n,
-  const arma::mat& X,   // taille p x n
-  const arma::vec& y,   // taille n
+  const arma::mat& X,
+  const arma::vec& y,
   const arma::vec& lambda,
   double L0,
   int max_it,
@@ -133,16 +121,16 @@ void ISTA_LRM(
   double L = 2.0, maxL = L0, ratio = 1.0;
   bool found = false;
   
-  arma::vec eta0(n), etak(n), df(p);
+  arma::vec eta0(y.n_elem), etak(y.n_elem), df(x0.n_elem);
   
   while ((delta > eps) && (iter < max_it)) {
-    // eta0 = X^T * x0  (NB: X est p x n, donc X.t() est n x p)
-    eta0 = X.t() * x0;
+    
+    eta0 = X * x0;
     
     // df = - X * (y - sigmoid(eta0))
     arma::vec prob = 1.0 / (1.0 + arma::exp(-eta0));
-    df = - X * (y - prob);
-    
+    df = - X.t() * (y - prob);
+  
     // fx0 = -sum(y*eta0 - log(1+exp(eta0)))
     fx0 = -arma::accu(y % eta0 - arma::log(1 + arma::exp(eta0)));
     
@@ -158,14 +146,14 @@ void ISTA_LRM(
       // proximal
       switch (penalty) {
         case 1: proximal_las(lambda, L, xk); break;
-        case 2: proximal_grp(p, K, pk, lambda, L, xk); break;
-        case 3: proximal_coo(p, K, pk, lambda, L, xk); break;
-        case 4: proximal_tree_grp(p, H, K, Ks, pk, lambda, L, xk); break;
-        case 5: proximal_tree_coo(p, H, K, Ks, pk, lambda, L, xk); break;
+        case 2: proximal_grp(lambda, L, xk, pk); break;
+        case 3: proximal_coo(lambda, L, xk, pk); break;
+        case 4: proximal_tree_grp(Ks, lambda, L, xk, pk); break;
+        case 5: proximal_tree_coo(Ks, lambda, L, xk, pk); break;
       }
       
       // etak = X^T * xk
-      etak = X.t() * xk;
+      etak = X * xk;
       
       // norme et produit scalaire
       arma::vec diff = xk - x0;
@@ -201,14 +189,10 @@ void ISTA_LRM(
 
 // [[Rcpp::export]]
 void FISTA_LRM(
-    int p,
-    int H,
-    int K,
     const arma::ivec& Ks,
     const arma::ivec& pk,
-    int n,
-    const arma::mat& X,   // taille p x n
-    const arma::vec& y,   // taille n
+    const arma::mat& X,
+    const arma::vec& y,
     const arma::vec& lambda,
     double L0,
     int max_it,
@@ -226,15 +210,15 @@ void FISTA_LRM(
   bool found = false;
   
   arma::vec s = x0;
-  arma::vec eta0(n), etak(n), df(p);
+  arma::vec eta0(y.n_elem), etak(y.n_elem), df(x0.n_elem);
   
   while ((delta > eps) && (iter < max_it)) {
-    // eta0 = X^T * s
-    eta0 = X.t() * s;
     
-    // df = -X * (y - sigmoid(eta0))
+    eta0 = X * s;
+    
+    // df = -X.t() * (y - sigmoid(eta0))
     arma::vec prob = 1.0 / (1.0 + arma::exp(-eta0));
-    df = - X * (y - prob);
+    df = - X.t() * (y - prob);
     
     // fy0
     fy0 = -arma::accu(y % eta0 - arma::log(1 + arma::exp(eta0)));
@@ -251,14 +235,14 @@ void FISTA_LRM(
       // proximal
       switch (penalty) {
         case 1: proximal_las(lambda, L, xk); break;
-        case 2: proximal_grp(p, K, pk, lambda, L, xk); break;
-        case 3: proximal_coo(p, K, pk, lambda, L, xk); break;
-        case 4: proximal_tree_grp(p, H, K, Ks, pk, lambda, L, xk); break;
-        case 5: proximal_tree_coo(p, H, K, Ks, pk, lambda, L, xk); break;
+        case 2: proximal_grp(lambda, L, xk, pk); break;
+        case 3: proximal_coo(lambda, L, xk, pk); break;
+        case 4: proximal_tree_grp(Ks, lambda, L, xk, pk); break;
+        case 5: proximal_tree_coo(Ks, lambda, L, xk, pk); break;
       }
       
       // etak = X^T * xk
-      etak = X.t() * xk;
+      etak = X * xk;
       
       arma::vec diff = xk - s;
       normDiff2 = arma::dot(diff, diff);

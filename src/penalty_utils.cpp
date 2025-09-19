@@ -7,58 +7,6 @@ using namespace arma;
 
 #define ZERO 2e-16 // practical zero
 
-// =====================================================
-// Normes de groupe et coopératives
-// =====================================================
-
-// [[Rcpp::export]]
-arma::vec groupnorm(const arma::vec& beta, const arma::ivec& pk) {
-  int K = pk.n_elem;
-  arma::vec norm(K, arma::fill::zeros);
-  
-  int ind = 0;
-  for (int k = 0; k < K; k++) {
-    arma::vec sub = beta.subvec(ind, ind + pk[k] - 1);
-    norm[k] = arma::norm(sub, 2);
-    ind += pk[k];
-  }
-  return norm;
-}
-
-// [[Rcpp::export]]
-arma::vec coopnorm(const arma::vec& beta, const arma::ivec& pk) {
-  int K = pk.n_elem;
-  arma::vec norm(K, arma::fill::zeros);
-  
-  int ind = 0;
-  for (int k = 0; k < K; k++) {
-    arma::vec sub = beta.subvec(ind, ind + pk[k] - 1);
-    double norm_pos = arma::norm(arma::clamp(sub, 0, arma::datum::inf), 2);
-    double norm_neg = arma::norm(arma::clamp(-sub, 0, arma::datum::inf), 2);
-    norm[k] = norm_pos + norm_neg;
-    ind += pk[k];
-  }
-  return norm;
-}
-
-// Retourne un vecteur de taille p avec la norme du groupe répété
-
-// [[Rcpp::export]]
-arma::vec groupnormrep(const arma::vec& beta, const arma::ivec& pk) {
-  int p = beta.n_elem;
-  arma::vec norm(p, arma::fill::zeros);
-  
-  int ind = 0;
-  for (int k = 0; k < pk.n_elem; k++) {
-    arma::vec sub = beta.subvec(ind, ind + pk[k] - 1);
-    double nrm = arma::norm(sub, 2);
-    norm.subvec(ind, ind + pk[k] - 1).fill(nrm);
-    ind += pk[k];
-  }
-  return norm;
-}
-
-
 // ______________________________________________________
 // L1 NORM A.K.A LASSO
 
@@ -78,7 +26,7 @@ double dual_norm_L1(arma::vec x) {
 }
 
 // [[Rcpp::export]]
-arma::vec proximal_L1(arma::vec x, arma::vec w, double lambda) {
+arma::vec proximal_L1(const arma::vec& x, const arma::vec& w, double lambda) {
   return(arma::max(arma::zeros(x.n_elem), arma::abs(x) - lambda*w ) % sign(x));
 }
 
@@ -86,22 +34,22 @@ arma::vec proximal_L1(arma::vec x, arma::vec w, double lambda) {
 // LINF NORM A.K.A BOUNDED REGRESSION
 
 // [[Rcpp::export]]
-arma::vec elt_norm_LINF(arma::vec x) {
+arma::vec elt_norm_LINF(const arma::vec& x) {
   return(arma::abs(x));
 }
 
 // [[Rcpp::export]]
-double pen_norm_LINF(arma::vec x, arma::vec w) {
+double pen_norm_LINF(const arma::vec& x, const arma::vec& w) {
   return(arma::max(arma::abs(w % x)));
 }
 
 // [[Rcpp::export]]
-double dual_norm_LINF(arma::vec x) {
+double dual_norm_LINF(const arma::vec& x) {
   return(arma::accu(arma::abs(x))) ;
 }
 
 // [[Rcpp::export]]
-arma::vec proximal_LINF(arma::vec x, arma::vec w, double lambda) {
+arma::vec proximal_LINF(const arma::vec& x, const arma::vec& w, double lambda) {
   arma::uword p = x.n_elem;
   arma::vec u, proj;
   arma::vec res = arma::zeros<arma::vec>(p);
@@ -137,9 +85,9 @@ arma::vec proximal_LINF(arma::vec x, arma::vec w, double lambda) {
 // L1/L2 NORM A.K.A GROUP-LASSO
 
 // [[Rcpp::export]]
-arma::vec elt_norm_L1L2(arma::vec x, arma::uvec pk) {
+arma::vec elt_norm_L1L2(const arma::vec& x, const arma::uvec& pk) {
   
-  arma::vec  res = zeros<arma::vec> (pk.n_elem) ; // output with group norms
+  arma::vec res = zeros<arma::vec> (pk.n_elem) ; // output with group norms
   arma::uword ind = 0 ; // index to go through the groups
   
   for (arma::uword k=0; k<pk.n_elem; k++) {
@@ -151,17 +99,32 @@ arma::vec elt_norm_L1L2(arma::vec x, arma::uvec pk) {
 }
 
 // [[Rcpp::export]]
-double pen_norm_L1L2(arma::vec x, arma::uvec pk, arma::vec w) {
+arma::vec elt_norm_L1L2_rep(const arma::vec& x, const arma::uvec& pk) {
+  
+  arma::vec res = zeros<arma::vec> (x.n_elem) ; // output with group norms
+  arma::uword ind = 0 ; // index to go through the groups
+  
+  for (arma::uword k=0; k<pk.n_elem; k++) {
+    double norm_current = norm(x.subvec(ind, ind + pk(k) - 1), 2);
+    res.subvec(ind, ind + pk(k) - 1).fill(norm_current);
+    ind += pk(k);
+  }
+  
+  return(res);
+}
+
+// [[Rcpp::export]]
+double pen_norm_L1L2(const arma::vec& x, const arma::uvec& pk, const arma::vec& w) {
   return(accu(w % elt_norm_L1L2(x, pk)));
 }
 
 // [[Rcpp::export]]
-double dual_norm_L1L2(arma::vec x, arma::uvec pk) {
+double dual_norm_L1L2(const arma::vec& x, const arma::uvec& pk) {
   return(max(elt_norm_L1L2(x, pk))) ;
 }
 
 // [[Rcpp::export]]
-arma::vec proximal_L1L2(arma::vec x, arma::uvec pk, arma::vec w, double lambda) {
+arma::vec proximal_L1L2(const arma::vec& x, const arma::uvec& pk, const arma::vec& w, double lambda) {
   
   arma::vec res = zeros<arma::vec>(x.n_elem);
   arma::uword ind = 0 ;
@@ -180,9 +143,9 @@ arma::vec proximal_L1L2(arma::vec x, arma::uvec pk, arma::vec w, double lambda) 
 // L1/LINF NORM A.K.A GROUP-LASSO type 2
 
 // [[Rcpp::export]]
-arma::vec elt_norm_L1LINF(arma::vec x, arma::uvec pk) {
+arma::vec elt_norm_L1LINF(const arma::vec& x, const arma::uvec& pk) {
   
-  arma::vec  res = zeros<arma::vec> (pk.n_elem) ; // output with group norms
+  arma::vec res = zeros<arma::vec> (pk.n_elem) ; // output with group norms
   arma::uword ind = 0 ; // index to go through the groups
   
   for (arma::uword k=0; k<pk.n_elem; k++) {
@@ -194,12 +157,27 @@ arma::vec elt_norm_L1LINF(arma::vec x, arma::uvec pk) {
 }
 
 // [[Rcpp::export]]
-double pen_norm_L1LINF(arma::vec x, arma::uvec pk, arma::vec w) {
+arma::vec elt_norm_L1LINF_rep(const arma::vec& x, const arma::uvec& pk) {
+  
+  arma::vec res = zeros<arma::vec> (x.n_elem) ; // output with group norms
+  arma::uword ind = 0 ; // index to go through the groups
+
+  for (arma::uword k=0; k<pk.n_elem; k++) {
+    double norm_current = max(abs(x.subvec(ind, ind + pk(k) - 1)));
+    res.subvec(ind, ind + pk(k) - 1).fill(norm_current);
+    ind += pk(k);
+  }
+
+  return(res);
+}
+
+// [[Rcpp::export]]
+double pen_norm_L1LINF(const arma::vec& x, const arma::uvec& pk, const arma::vec& w) {
   return(accu(w % elt_norm_L1LINF(x, pk)));
 }
 
 // [[Rcpp::export]]
-double dual_norm_L1LINF(arma::vec x, arma::uvec pk) {
+double dual_norm_L1LINF(const arma::vec& x, const arma::uvec& pk) {
   
   arma::vec  res = zeros<arma::vec> (pk.n_elem) ; // output with group norms
   arma::uword ind = 0 ; // index to go through the groups
@@ -213,7 +191,7 @@ double dual_norm_L1LINF(arma::vec x, arma::uvec pk) {
 }
 
 // [[Rcpp::export]]
-arma::vec proximal_L1LINF(arma::vec x, arma::uvec pk, arma::vec w, double lambda) {
+arma::vec proximal_L1LINF(const arma::vec& x, const arma::uvec& pk, const arma::vec& w, double lambda) {
   
   uword ind = 0, p ;
   arma::vec u, v, proj;
@@ -256,13 +234,15 @@ arma::vec proximal_L1LINF(arma::vec x, arma::uvec pk, arma::vec w, double lambda
 // COOP(ERATIVE) NORM A.K.A COOPERATIVE-LASSO
 
 // [[Rcpp::export]]
-arma::vec elt_norm_COOP(arma::vec x, arma::uvec pk) {
+arma::vec elt_norm_COOP(const arma::vec& x, const arma::uvec& pk) {
   
   arma::vec  res = zeros<arma::vec> (pk.n_elem) ; // output with group norms
   arma::uword ind = 0 ; // index to go through the groups
   
   for (arma::uword k=0; k<pk.n_elem; k++) {
-    res(k) = norm(max(zeros(pk(k)),x.subvec(ind, ind + pk(k) - 1)), 2) + norm(min(zeros(pk(k)),x.subvec(ind, ind + pk(k) - 1)),2);
+    res(k) = 
+      norm(max(zeros(pk(k)),x.subvec(ind, ind + pk(k) - 1)), 2) + 
+      norm(min(zeros(pk(k)),x.subvec(ind, ind + pk(k) - 1)), 2);
     ind += pk(k);
   }
   
@@ -270,7 +250,24 @@ arma::vec elt_norm_COOP(arma::vec x, arma::uvec pk) {
 }
 
 // [[Rcpp::export]]
-double pen_norm_COOP(arma::vec x, arma::uvec pk, arma::vec w) {
+arma::vec elt_norm_COOP_rep(const arma::vec& x, const arma::uvec& pk) {
+  
+  arma::vec  res = zeros<arma::vec> (x.n_elem) ; // output with group norms
+  arma::uword ind = 0 ; // index to go through the groups
+  
+  for (arma::uword k=0; k<pk.n_elem; k++) {
+    double norm_current = 
+      norm(max(zeros(pk(k)), x.subvec(ind, ind + pk(k) - 1)), 2) + 
+      norm(min(zeros(pk(k)), x.subvec(ind, ind + pk(k) - 1)), 2) ;
+    res.subvec(ind, ind + pk(k) - 1).fill(norm_current);
+    ind += pk(k);
+  }
+
+  return(res);
+}
+
+// [[Rcpp::export]]
+double pen_norm_COOP(const arma::vec& x, const arma::uvec& pk, const arma::vec& w) {
   return(accu(w % elt_norm_COOP(x, pk)));
 }
 
@@ -280,7 +277,7 @@ double dual_norm_COOP(arma::vec x, arma::uvec pk) {
 }
 
 // [[Rcpp::export]]
-arma::vec proximal_COOP(arma::vec x, arma::uvec pk, arma::vec w, double lambda) {
+arma::vec proximal_COOP(const arma::vec& x, const arma::uvec& pk, const arma::vec& w, double lambda) {
   
   arma::vec res = zeros<arma::vec>(x.n_elem);
   arma::uword ind = 0 ;

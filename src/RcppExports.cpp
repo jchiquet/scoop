@@ -12,13 +12,10 @@ Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
 // ISTA_LM
-void ISTA_LM(int p, int H, int K, const arma::ivec& Ks, const arma::ivec& pk, const arma::mat& XtX, const arma::vec& Xty, const arma::vec& lambda, double L, int max_it, double eps, arma::vec& x0, arma::vec& xk, int penalty, int& iter);
-RcppExport SEXP _scoop_ISTA_LM(SEXP pSEXP, SEXP HSEXP, SEXP KSEXP, SEXP KsSEXP, SEXP pkSEXP, SEXP XtXSEXP, SEXP XtySEXP, SEXP lambdaSEXP, SEXP LSEXP, SEXP max_itSEXP, SEXP epsSEXP, SEXP x0SEXP, SEXP xkSEXP, SEXP penaltySEXP, SEXP iterSEXP) {
+void ISTA_LM(const arma::ivec& Ks, const arma::ivec& pk, const arma::mat& XtX, const arma::vec& Xty, const arma::vec& lambda, double L, int max_it, double eps, arma::vec& x0, arma::vec& xk, int penalty, int& iter);
+RcppExport SEXP _scoop_ISTA_LM(SEXP KsSEXP, SEXP pkSEXP, SEXP XtXSEXP, SEXP XtySEXP, SEXP lambdaSEXP, SEXP LSEXP, SEXP max_itSEXP, SEXP epsSEXP, SEXP x0SEXP, SEXP xkSEXP, SEXP penaltySEXP, SEXP iterSEXP) {
 BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< int >::type p(pSEXP);
-    Rcpp::traits::input_parameter< int >::type H(HSEXP);
-    Rcpp::traits::input_parameter< int >::type K(KSEXP);
     Rcpp::traits::input_parameter< const arma::ivec& >::type Ks(KsSEXP);
     Rcpp::traits::input_parameter< const arma::ivec& >::type pk(pkSEXP);
     Rcpp::traits::input_parameter< const arma::mat& >::type XtX(XtXSEXP);
@@ -31,18 +28,15 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< arma::vec& >::type xk(xkSEXP);
     Rcpp::traits::input_parameter< int >::type penalty(penaltySEXP);
     Rcpp::traits::input_parameter< int& >::type iter(iterSEXP);
-    ISTA_LM(p, H, K, Ks, pk, XtX, Xty, lambda, L, max_it, eps, x0, xk, penalty, iter);
+    ISTA_LM(Ks, pk, XtX, Xty, lambda, L, max_it, eps, x0, xk, penalty, iter);
     return R_NilValue;
 END_RCPP
 }
 // FISTA_LM
-void FISTA_LM(int p, int H, int K, const arma::ivec& Ks, const arma::ivec& pk, const arma::mat& XtX, const arma::vec& Xty, const arma::vec& lambda, double L, int max_it, double eps, arma::vec& x0, arma::vec& xk, int penalty, int& iter);
-RcppExport SEXP _scoop_FISTA_LM(SEXP pSEXP, SEXP HSEXP, SEXP KSEXP, SEXP KsSEXP, SEXP pkSEXP, SEXP XtXSEXP, SEXP XtySEXP, SEXP lambdaSEXP, SEXP LSEXP, SEXP max_itSEXP, SEXP epsSEXP, SEXP x0SEXP, SEXP xkSEXP, SEXP penaltySEXP, SEXP iterSEXP) {
+void FISTA_LM(const arma::ivec& Ks, const arma::ivec& pk, const arma::mat& XtX, const arma::vec& Xty, const arma::vec& lambda, double L, int max_it, double eps, arma::vec& x0, arma::vec& xk, int penalty, int& iter);
+RcppExport SEXP _scoop_FISTA_LM(SEXP KsSEXP, SEXP pkSEXP, SEXP XtXSEXP, SEXP XtySEXP, SEXP lambdaSEXP, SEXP LSEXP, SEXP max_itSEXP, SEXP epsSEXP, SEXP x0SEXP, SEXP xkSEXP, SEXP penaltySEXP, SEXP iterSEXP) {
 BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< int >::type p(pSEXP);
-    Rcpp::traits::input_parameter< int >::type H(HSEXP);
-    Rcpp::traits::input_parameter< int >::type K(KSEXP);
     Rcpp::traits::input_parameter< const arma::ivec& >::type Ks(KsSEXP);
     Rcpp::traits::input_parameter< const arma::ivec& >::type pk(pkSEXP);
     Rcpp::traits::input_parameter< const arma::mat& >::type XtX(XtXSEXP);
@@ -55,21 +49,17 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< arma::vec& >::type xk(xkSEXP);
     Rcpp::traits::input_parameter< int >::type penalty(penaltySEXP);
     Rcpp::traits::input_parameter< int& >::type iter(iterSEXP);
-    FISTA_LM(p, H, K, Ks, pk, XtX, Xty, lambda, L, max_it, eps, x0, xk, penalty, iter);
+    FISTA_LM(Ks, pk, XtX, Xty, lambda, L, max_it, eps, x0, xk, penalty, iter);
     return R_NilValue;
 END_RCPP
 }
 // ISTA_LRM
-void ISTA_LRM(int p, int H, int K, const arma::ivec& Ks, const arma::ivec& pk, int n, const arma::mat& X, const arma::vec& y, const arma::vec& lambda, double L0, int max_it, double eps, arma::vec& x0, arma::vec& xk, int penalty, int& iter);
-RcppExport SEXP _scoop_ISTA_LRM(SEXP pSEXP, SEXP HSEXP, SEXP KSEXP, SEXP KsSEXP, SEXP pkSEXP, SEXP nSEXP, SEXP XSEXP, SEXP ySEXP, SEXP lambdaSEXP, SEXP L0SEXP, SEXP max_itSEXP, SEXP epsSEXP, SEXP x0SEXP, SEXP xkSEXP, SEXP penaltySEXP, SEXP iterSEXP) {
+void ISTA_LRM(const arma::ivec& Ks, const arma::ivec& pk, const arma::mat& X, const arma::vec& y, const arma::vec& lambda, double L0, int max_it, double eps, arma::vec& x0, arma::vec& xk, int penalty, int& iter);
+RcppExport SEXP _scoop_ISTA_LRM(SEXP KsSEXP, SEXP pkSEXP, SEXP XSEXP, SEXP ySEXP, SEXP lambdaSEXP, SEXP L0SEXP, SEXP max_itSEXP, SEXP epsSEXP, SEXP x0SEXP, SEXP xkSEXP, SEXP penaltySEXP, SEXP iterSEXP) {
 BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< int >::type p(pSEXP);
-    Rcpp::traits::input_parameter< int >::type H(HSEXP);
-    Rcpp::traits::input_parameter< int >::type K(KSEXP);
     Rcpp::traits::input_parameter< const arma::ivec& >::type Ks(KsSEXP);
     Rcpp::traits::input_parameter< const arma::ivec& >::type pk(pkSEXP);
-    Rcpp::traits::input_parameter< int >::type n(nSEXP);
     Rcpp::traits::input_parameter< const arma::mat& >::type X(XSEXP);
     Rcpp::traits::input_parameter< const arma::vec& >::type y(ySEXP);
     Rcpp::traits::input_parameter< const arma::vec& >::type lambda(lambdaSEXP);
@@ -80,21 +70,17 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< arma::vec& >::type xk(xkSEXP);
     Rcpp::traits::input_parameter< int >::type penalty(penaltySEXP);
     Rcpp::traits::input_parameter< int& >::type iter(iterSEXP);
-    ISTA_LRM(p, H, K, Ks, pk, n, X, y, lambda, L0, max_it, eps, x0, xk, penalty, iter);
+    ISTA_LRM(Ks, pk, X, y, lambda, L0, max_it, eps, x0, xk, penalty, iter);
     return R_NilValue;
 END_RCPP
 }
 // FISTA_LRM
-void FISTA_LRM(int p, int H, int K, const arma::ivec& Ks, const arma::ivec& pk, int n, const arma::mat& X, const arma::vec& y, const arma::vec& lambda, double L0, int max_it, double eps, arma::vec& x0, arma::vec& xk, int penalty, int& iter);
-RcppExport SEXP _scoop_FISTA_LRM(SEXP pSEXP, SEXP HSEXP, SEXP KSEXP, SEXP KsSEXP, SEXP pkSEXP, SEXP nSEXP, SEXP XSEXP, SEXP ySEXP, SEXP lambdaSEXP, SEXP L0SEXP, SEXP max_itSEXP, SEXP epsSEXP, SEXP x0SEXP, SEXP xkSEXP, SEXP penaltySEXP, SEXP iterSEXP) {
+void FISTA_LRM(const arma::ivec& Ks, const arma::ivec& pk, const arma::mat& X, const arma::vec& y, const arma::vec& lambda, double L0, int max_it, double eps, arma::vec& x0, arma::vec& xk, int penalty, int& iter);
+RcppExport SEXP _scoop_FISTA_LRM(SEXP KsSEXP, SEXP pkSEXP, SEXP XSEXP, SEXP ySEXP, SEXP lambdaSEXP, SEXP L0SEXP, SEXP max_itSEXP, SEXP epsSEXP, SEXP x0SEXP, SEXP xkSEXP, SEXP penaltySEXP, SEXP iterSEXP) {
 BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< int >::type p(pSEXP);
-    Rcpp::traits::input_parameter< int >::type H(HSEXP);
-    Rcpp::traits::input_parameter< int >::type K(KSEXP);
     Rcpp::traits::input_parameter< const arma::ivec& >::type Ks(KsSEXP);
     Rcpp::traits::input_parameter< const arma::ivec& >::type pk(pkSEXP);
-    Rcpp::traits::input_parameter< int >::type n(nSEXP);
     Rcpp::traits::input_parameter< const arma::mat& >::type X(XSEXP);
     Rcpp::traits::input_parameter< const arma::vec& >::type y(ySEXP);
     Rcpp::traits::input_parameter< const arma::vec& >::type lambda(lambdaSEXP);
@@ -105,44 +91,8 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< arma::vec& >::type xk(xkSEXP);
     Rcpp::traits::input_parameter< int >::type penalty(penaltySEXP);
     Rcpp::traits::input_parameter< int& >::type iter(iterSEXP);
-    FISTA_LRM(p, H, K, Ks, pk, n, X, y, lambda, L0, max_it, eps, x0, xk, penalty, iter);
+    FISTA_LRM(Ks, pk, X, y, lambda, L0, max_it, eps, x0, xk, penalty, iter);
     return R_NilValue;
-END_RCPP
-}
-// groupnorm
-arma::vec groupnorm(const arma::vec& beta, const arma::ivec& pk);
-RcppExport SEXP _scoop_groupnorm(SEXP betaSEXP, SEXP pkSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const arma::vec& >::type beta(betaSEXP);
-    Rcpp::traits::input_parameter< const arma::ivec& >::type pk(pkSEXP);
-    rcpp_result_gen = Rcpp::wrap(groupnorm(beta, pk));
-    return rcpp_result_gen;
-END_RCPP
-}
-// coopnorm
-arma::vec coopnorm(const arma::vec& beta, const arma::ivec& pk);
-RcppExport SEXP _scoop_coopnorm(SEXP betaSEXP, SEXP pkSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const arma::vec& >::type beta(betaSEXP);
-    Rcpp::traits::input_parameter< const arma::ivec& >::type pk(pkSEXP);
-    rcpp_result_gen = Rcpp::wrap(coopnorm(beta, pk));
-    return rcpp_result_gen;
-END_RCPP
-}
-// groupnormrep
-arma::vec groupnormrep(const arma::vec& beta, const arma::ivec& pk);
-RcppExport SEXP _scoop_groupnormrep(SEXP betaSEXP, SEXP pkSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const arma::vec& >::type beta(betaSEXP);
-    Rcpp::traits::input_parameter< const arma::ivec& >::type pk(pkSEXP);
-    rcpp_result_gen = Rcpp::wrap(groupnormrep(beta, pk));
-    return rcpp_result_gen;
 END_RCPP
 }
 // elt_norm_L1
@@ -180,188 +130,224 @@ BEGIN_RCPP
 END_RCPP
 }
 // proximal_L1
-arma::vec proximal_L1(arma::vec x, arma::vec w, double lambda);
+arma::vec proximal_L1(const arma::vec& x, const arma::vec& w, double lambda);
 RcppExport SEXP _scoop_proximal_L1(SEXP xSEXP, SEXP wSEXP, SEXP lambdaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< arma::vec >::type x(xSEXP);
-    Rcpp::traits::input_parameter< arma::vec >::type w(wSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type w(wSEXP);
     Rcpp::traits::input_parameter< double >::type lambda(lambdaSEXP);
     rcpp_result_gen = Rcpp::wrap(proximal_L1(x, w, lambda));
     return rcpp_result_gen;
 END_RCPP
 }
 // elt_norm_LINF
-arma::vec elt_norm_LINF(arma::vec x);
+arma::vec elt_norm_LINF(const arma::vec& x);
 RcppExport SEXP _scoop_elt_norm_LINF(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< arma::vec >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type x(xSEXP);
     rcpp_result_gen = Rcpp::wrap(elt_norm_LINF(x));
     return rcpp_result_gen;
 END_RCPP
 }
 // pen_norm_LINF
-double pen_norm_LINF(arma::vec x, arma::vec w);
+double pen_norm_LINF(const arma::vec& x, const arma::vec& w);
 RcppExport SEXP _scoop_pen_norm_LINF(SEXP xSEXP, SEXP wSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< arma::vec >::type x(xSEXP);
-    Rcpp::traits::input_parameter< arma::vec >::type w(wSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type w(wSEXP);
     rcpp_result_gen = Rcpp::wrap(pen_norm_LINF(x, w));
     return rcpp_result_gen;
 END_RCPP
 }
 // dual_norm_LINF
-double dual_norm_LINF(arma::vec x);
+double dual_norm_LINF(const arma::vec& x);
 RcppExport SEXP _scoop_dual_norm_LINF(SEXP xSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< arma::vec >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type x(xSEXP);
     rcpp_result_gen = Rcpp::wrap(dual_norm_LINF(x));
     return rcpp_result_gen;
 END_RCPP
 }
 // proximal_LINF
-arma::vec proximal_LINF(arma::vec x, arma::vec w, double lambda);
+arma::vec proximal_LINF(const arma::vec& x, const arma::vec& w, double lambda);
 RcppExport SEXP _scoop_proximal_LINF(SEXP xSEXP, SEXP wSEXP, SEXP lambdaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< arma::vec >::type x(xSEXP);
-    Rcpp::traits::input_parameter< arma::vec >::type w(wSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type w(wSEXP);
     Rcpp::traits::input_parameter< double >::type lambda(lambdaSEXP);
     rcpp_result_gen = Rcpp::wrap(proximal_LINF(x, w, lambda));
     return rcpp_result_gen;
 END_RCPP
 }
 // elt_norm_L1L2
-arma::vec elt_norm_L1L2(arma::vec x, arma::uvec pk);
+arma::vec elt_norm_L1L2(const arma::vec& x, const arma::uvec& pk);
 RcppExport SEXP _scoop_elt_norm_L1L2(SEXP xSEXP, SEXP pkSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< arma::vec >::type x(xSEXP);
-    Rcpp::traits::input_parameter< arma::uvec >::type pk(pkSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const arma::uvec& >::type pk(pkSEXP);
     rcpp_result_gen = Rcpp::wrap(elt_norm_L1L2(x, pk));
     return rcpp_result_gen;
 END_RCPP
 }
+// elt_norm_L1L2_rep
+arma::vec elt_norm_L1L2_rep(const arma::vec& x, const arma::uvec& pk);
+RcppExport SEXP _scoop_elt_norm_L1L2_rep(SEXP xSEXP, SEXP pkSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const arma::vec& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const arma::uvec& >::type pk(pkSEXP);
+    rcpp_result_gen = Rcpp::wrap(elt_norm_L1L2_rep(x, pk));
+    return rcpp_result_gen;
+END_RCPP
+}
 // pen_norm_L1L2
-double pen_norm_L1L2(arma::vec x, arma::uvec pk, arma::vec w);
+double pen_norm_L1L2(const arma::vec& x, const arma::uvec& pk, const arma::vec& w);
 RcppExport SEXP _scoop_pen_norm_L1L2(SEXP xSEXP, SEXP pkSEXP, SEXP wSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< arma::vec >::type x(xSEXP);
-    Rcpp::traits::input_parameter< arma::uvec >::type pk(pkSEXP);
-    Rcpp::traits::input_parameter< arma::vec >::type w(wSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const arma::uvec& >::type pk(pkSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type w(wSEXP);
     rcpp_result_gen = Rcpp::wrap(pen_norm_L1L2(x, pk, w));
     return rcpp_result_gen;
 END_RCPP
 }
 // dual_norm_L1L2
-double dual_norm_L1L2(arma::vec x, arma::uvec pk);
+double dual_norm_L1L2(const arma::vec& x, const arma::uvec& pk);
 RcppExport SEXP _scoop_dual_norm_L1L2(SEXP xSEXP, SEXP pkSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< arma::vec >::type x(xSEXP);
-    Rcpp::traits::input_parameter< arma::uvec >::type pk(pkSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const arma::uvec& >::type pk(pkSEXP);
     rcpp_result_gen = Rcpp::wrap(dual_norm_L1L2(x, pk));
     return rcpp_result_gen;
 END_RCPP
 }
 // proximal_L1L2
-arma::vec proximal_L1L2(arma::vec x, arma::uvec pk, arma::vec w, double lambda);
+arma::vec proximal_L1L2(const arma::vec& x, const arma::uvec& pk, const arma::vec& w, double lambda);
 RcppExport SEXP _scoop_proximal_L1L2(SEXP xSEXP, SEXP pkSEXP, SEXP wSEXP, SEXP lambdaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< arma::vec >::type x(xSEXP);
-    Rcpp::traits::input_parameter< arma::uvec >::type pk(pkSEXP);
-    Rcpp::traits::input_parameter< arma::vec >::type w(wSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const arma::uvec& >::type pk(pkSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type w(wSEXP);
     Rcpp::traits::input_parameter< double >::type lambda(lambdaSEXP);
     rcpp_result_gen = Rcpp::wrap(proximal_L1L2(x, pk, w, lambda));
     return rcpp_result_gen;
 END_RCPP
 }
 // elt_norm_L1LINF
-arma::vec elt_norm_L1LINF(arma::vec x, arma::uvec pk);
+arma::vec elt_norm_L1LINF(const arma::vec& x, const arma::uvec& pk);
 RcppExport SEXP _scoop_elt_norm_L1LINF(SEXP xSEXP, SEXP pkSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< arma::vec >::type x(xSEXP);
-    Rcpp::traits::input_parameter< arma::uvec >::type pk(pkSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const arma::uvec& >::type pk(pkSEXP);
     rcpp_result_gen = Rcpp::wrap(elt_norm_L1LINF(x, pk));
     return rcpp_result_gen;
 END_RCPP
 }
+// elt_norm_L1LINF_rep
+arma::vec elt_norm_L1LINF_rep(const arma::vec& x, const arma::uvec& pk);
+RcppExport SEXP _scoop_elt_norm_L1LINF_rep(SEXP xSEXP, SEXP pkSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const arma::vec& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const arma::uvec& >::type pk(pkSEXP);
+    rcpp_result_gen = Rcpp::wrap(elt_norm_L1LINF_rep(x, pk));
+    return rcpp_result_gen;
+END_RCPP
+}
 // pen_norm_L1LINF
-double pen_norm_L1LINF(arma::vec x, arma::uvec pk, arma::vec w);
+double pen_norm_L1LINF(const arma::vec& x, const arma::uvec& pk, const arma::vec& w);
 RcppExport SEXP _scoop_pen_norm_L1LINF(SEXP xSEXP, SEXP pkSEXP, SEXP wSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< arma::vec >::type x(xSEXP);
-    Rcpp::traits::input_parameter< arma::uvec >::type pk(pkSEXP);
-    Rcpp::traits::input_parameter< arma::vec >::type w(wSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const arma::uvec& >::type pk(pkSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type w(wSEXP);
     rcpp_result_gen = Rcpp::wrap(pen_norm_L1LINF(x, pk, w));
     return rcpp_result_gen;
 END_RCPP
 }
 // dual_norm_L1LINF
-double dual_norm_L1LINF(arma::vec x, arma::uvec pk);
+double dual_norm_L1LINF(const arma::vec& x, const arma::uvec& pk);
 RcppExport SEXP _scoop_dual_norm_L1LINF(SEXP xSEXP, SEXP pkSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< arma::vec >::type x(xSEXP);
-    Rcpp::traits::input_parameter< arma::uvec >::type pk(pkSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const arma::uvec& >::type pk(pkSEXP);
     rcpp_result_gen = Rcpp::wrap(dual_norm_L1LINF(x, pk));
     return rcpp_result_gen;
 END_RCPP
 }
 // proximal_L1LINF
-arma::vec proximal_L1LINF(arma::vec x, arma::uvec pk, arma::vec w, double lambda);
+arma::vec proximal_L1LINF(const arma::vec& x, const arma::uvec& pk, const arma::vec& w, double lambda);
 RcppExport SEXP _scoop_proximal_L1LINF(SEXP xSEXP, SEXP pkSEXP, SEXP wSEXP, SEXP lambdaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< arma::vec >::type x(xSEXP);
-    Rcpp::traits::input_parameter< arma::uvec >::type pk(pkSEXP);
-    Rcpp::traits::input_parameter< arma::vec >::type w(wSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const arma::uvec& >::type pk(pkSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type w(wSEXP);
     Rcpp::traits::input_parameter< double >::type lambda(lambdaSEXP);
     rcpp_result_gen = Rcpp::wrap(proximal_L1LINF(x, pk, w, lambda));
     return rcpp_result_gen;
 END_RCPP
 }
 // elt_norm_COOP
-arma::vec elt_norm_COOP(arma::vec x, arma::uvec pk);
+arma::vec elt_norm_COOP(const arma::vec& x, const arma::uvec& pk);
 RcppExport SEXP _scoop_elt_norm_COOP(SEXP xSEXP, SEXP pkSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< arma::vec >::type x(xSEXP);
-    Rcpp::traits::input_parameter< arma::uvec >::type pk(pkSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const arma::uvec& >::type pk(pkSEXP);
     rcpp_result_gen = Rcpp::wrap(elt_norm_COOP(x, pk));
     return rcpp_result_gen;
 END_RCPP
 }
+// elt_norm_COOP_rep
+arma::vec elt_norm_COOP_rep(const arma::vec& x, const arma::uvec& pk);
+RcppExport SEXP _scoop_elt_norm_COOP_rep(SEXP xSEXP, SEXP pkSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const arma::vec& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const arma::uvec& >::type pk(pkSEXP);
+    rcpp_result_gen = Rcpp::wrap(elt_norm_COOP_rep(x, pk));
+    return rcpp_result_gen;
+END_RCPP
+}
 // pen_norm_COOP
-double pen_norm_COOP(arma::vec x, arma::uvec pk, arma::vec w);
+double pen_norm_COOP(const arma::vec& x, const arma::uvec& pk, const arma::vec& w);
 RcppExport SEXP _scoop_pen_norm_COOP(SEXP xSEXP, SEXP pkSEXP, SEXP wSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< arma::vec >::type x(xSEXP);
-    Rcpp::traits::input_parameter< arma::uvec >::type pk(pkSEXP);
-    Rcpp::traits::input_parameter< arma::vec >::type w(wSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const arma::uvec& >::type pk(pkSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type w(wSEXP);
     rcpp_result_gen = Rcpp::wrap(pen_norm_COOP(x, pk, w));
     return rcpp_result_gen;
 END_RCPP
@@ -379,28 +365,91 @@ BEGIN_RCPP
 END_RCPP
 }
 // proximal_COOP
-arma::vec proximal_COOP(arma::vec x, arma::uvec pk, arma::vec w, double lambda);
+arma::vec proximal_COOP(const arma::vec& x, const arma::uvec& pk, const arma::vec& w, double lambda);
 RcppExport SEXP _scoop_proximal_COOP(SEXP xSEXP, SEXP pkSEXP, SEXP wSEXP, SEXP lambdaSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< arma::vec >::type x(xSEXP);
-    Rcpp::traits::input_parameter< arma::uvec >::type pk(pkSEXP);
-    Rcpp::traits::input_parameter< arma::vec >::type w(wSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const arma::uvec& >::type pk(pkSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type w(wSEXP);
     Rcpp::traits::input_parameter< double >::type lambda(lambdaSEXP);
     rcpp_result_gen = Rcpp::wrap(proximal_COOP(x, pk, w, lambda));
     return rcpp_result_gen;
 END_RCPP
 }
+// proximal_las
+void proximal_las(const arma::vec& lambda, double L, arma::vec& u);
+RcppExport SEXP _scoop_proximal_las(SEXP lambdaSEXP, SEXP LSEXP, SEXP uSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const arma::vec& >::type lambda(lambdaSEXP);
+    Rcpp::traits::input_parameter< double >::type L(LSEXP);
+    Rcpp::traits::input_parameter< arma::vec& >::type u(uSEXP);
+    proximal_las(lambda, L, u);
+    return R_NilValue;
+END_RCPP
+}
+// proximal_grp
+void proximal_grp(const arma::vec& lambda, double L, arma::vec& u, const arma::ivec& pk);
+RcppExport SEXP _scoop_proximal_grp(SEXP lambdaSEXP, SEXP LSEXP, SEXP uSEXP, SEXP pkSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const arma::vec& >::type lambda(lambdaSEXP);
+    Rcpp::traits::input_parameter< double >::type L(LSEXP);
+    Rcpp::traits::input_parameter< arma::vec& >::type u(uSEXP);
+    Rcpp::traits::input_parameter< const arma::ivec& >::type pk(pkSEXP);
+    proximal_grp(lambda, L, u, pk);
+    return R_NilValue;
+END_RCPP
+}
+// proximal_coo
+void proximal_coo(const arma::vec& lambda, double L, arma::vec& u, const arma::ivec& pk);
+RcppExport SEXP _scoop_proximal_coo(SEXP lambdaSEXP, SEXP LSEXP, SEXP uSEXP, SEXP pkSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const arma::vec& >::type lambda(lambdaSEXP);
+    Rcpp::traits::input_parameter< double >::type L(LSEXP);
+    Rcpp::traits::input_parameter< arma::vec& >::type u(uSEXP);
+    Rcpp::traits::input_parameter< const arma::ivec& >::type pk(pkSEXP);
+    proximal_coo(lambda, L, u, pk);
+    return R_NilValue;
+END_RCPP
+}
+// proximal_tree_grp
+void proximal_tree_grp(const arma::ivec& Ks, const arma::vec& lambda, double L, arma::vec& u, const arma::ivec& pk);
+RcppExport SEXP _scoop_proximal_tree_grp(SEXP KsSEXP, SEXP lambdaSEXP, SEXP LSEXP, SEXP uSEXP, SEXP pkSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const arma::ivec& >::type Ks(KsSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type lambda(lambdaSEXP);
+    Rcpp::traits::input_parameter< double >::type L(LSEXP);
+    Rcpp::traits::input_parameter< arma::vec& >::type u(uSEXP);
+    Rcpp::traits::input_parameter< const arma::ivec& >::type pk(pkSEXP);
+    proximal_tree_grp(Ks, lambda, L, u, pk);
+    return R_NilValue;
+END_RCPP
+}
+// proximal_tree_coo
+void proximal_tree_coo(const arma::ivec& Ks, const arma::vec& lambda, double L, arma::vec& u, const arma::ivec& pk);
+RcppExport SEXP _scoop_proximal_tree_coo(SEXP KsSEXP, SEXP lambdaSEXP, SEXP LSEXP, SEXP uSEXP, SEXP pkSEXP) {
+BEGIN_RCPP
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const arma::ivec& >::type Ks(KsSEXP);
+    Rcpp::traits::input_parameter< const arma::vec& >::type lambda(lambdaSEXP);
+    Rcpp::traits::input_parameter< double >::type L(LSEXP);
+    Rcpp::traits::input_parameter< arma::vec& >::type u(uSEXP);
+    Rcpp::traits::input_parameter< const arma::ivec& >::type pk(pkSEXP);
+    proximal_tree_coo(Ks, lambda, L, u, pk);
+    return R_NilValue;
+END_RCPP
+}
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_scoop_ISTA_LM", (DL_FUNC) &_scoop_ISTA_LM, 15},
-    {"_scoop_FISTA_LM", (DL_FUNC) &_scoop_FISTA_LM, 15},
-    {"_scoop_ISTA_LRM", (DL_FUNC) &_scoop_ISTA_LRM, 16},
-    {"_scoop_FISTA_LRM", (DL_FUNC) &_scoop_FISTA_LRM, 16},
-    {"_scoop_groupnorm", (DL_FUNC) &_scoop_groupnorm, 2},
-    {"_scoop_coopnorm", (DL_FUNC) &_scoop_coopnorm, 2},
-    {"_scoop_groupnormrep", (DL_FUNC) &_scoop_groupnormrep, 2},
+    {"_scoop_ISTA_LM", (DL_FUNC) &_scoop_ISTA_LM, 12},
+    {"_scoop_FISTA_LM", (DL_FUNC) &_scoop_FISTA_LM, 12},
+    {"_scoop_ISTA_LRM", (DL_FUNC) &_scoop_ISTA_LRM, 12},
+    {"_scoop_FISTA_LRM", (DL_FUNC) &_scoop_FISTA_LRM, 12},
     {"_scoop_elt_norm_L1", (DL_FUNC) &_scoop_elt_norm_L1, 1},
     {"_scoop_pen_norm_L1", (DL_FUNC) &_scoop_pen_norm_L1, 2},
     {"_scoop_dual_norm_L1", (DL_FUNC) &_scoop_dual_norm_L1, 1},
@@ -410,17 +459,25 @@ static const R_CallMethodDef CallEntries[] = {
     {"_scoop_dual_norm_LINF", (DL_FUNC) &_scoop_dual_norm_LINF, 1},
     {"_scoop_proximal_LINF", (DL_FUNC) &_scoop_proximal_LINF, 3},
     {"_scoop_elt_norm_L1L2", (DL_FUNC) &_scoop_elt_norm_L1L2, 2},
+    {"_scoop_elt_norm_L1L2_rep", (DL_FUNC) &_scoop_elt_norm_L1L2_rep, 2},
     {"_scoop_pen_norm_L1L2", (DL_FUNC) &_scoop_pen_norm_L1L2, 3},
     {"_scoop_dual_norm_L1L2", (DL_FUNC) &_scoop_dual_norm_L1L2, 2},
     {"_scoop_proximal_L1L2", (DL_FUNC) &_scoop_proximal_L1L2, 4},
     {"_scoop_elt_norm_L1LINF", (DL_FUNC) &_scoop_elt_norm_L1LINF, 2},
+    {"_scoop_elt_norm_L1LINF_rep", (DL_FUNC) &_scoop_elt_norm_L1LINF_rep, 2},
     {"_scoop_pen_norm_L1LINF", (DL_FUNC) &_scoop_pen_norm_L1LINF, 3},
     {"_scoop_dual_norm_L1LINF", (DL_FUNC) &_scoop_dual_norm_L1LINF, 2},
     {"_scoop_proximal_L1LINF", (DL_FUNC) &_scoop_proximal_L1LINF, 4},
     {"_scoop_elt_norm_COOP", (DL_FUNC) &_scoop_elt_norm_COOP, 2},
+    {"_scoop_elt_norm_COOP_rep", (DL_FUNC) &_scoop_elt_norm_COOP_rep, 2},
     {"_scoop_pen_norm_COOP", (DL_FUNC) &_scoop_pen_norm_COOP, 3},
     {"_scoop_dual_norm_COOP", (DL_FUNC) &_scoop_dual_norm_COOP, 2},
     {"_scoop_proximal_COOP", (DL_FUNC) &_scoop_proximal_COOP, 4},
+    {"_scoop_proximal_las", (DL_FUNC) &_scoop_proximal_las, 3},
+    {"_scoop_proximal_grp", (DL_FUNC) &_scoop_proximal_grp, 4},
+    {"_scoop_proximal_coo", (DL_FUNC) &_scoop_proximal_coo, 4},
+    {"_scoop_proximal_tree_grp", (DL_FUNC) &_scoop_proximal_tree_grp, 5},
+    {"_scoop_proximal_tree_coo", (DL_FUNC) &_scoop_proximal_tree_coo, 5},
     {NULL, NULL, 0}
 };
 

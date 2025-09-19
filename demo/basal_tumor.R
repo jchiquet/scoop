@@ -6,13 +6,13 @@ cat("\nExecuting the whole script is a matter of minutes... \n")
 cat("\nMODEL FITTING \n")
 
 cat("\nComputing sparse group-Lasso path...")
-lasso <- lasso(x, y, group, family="binomial")
+lasso <- lasso(x, y, family="binomial")
 
 cat("\nComputing sparse group-Lasso path...")
 spglasso <- sparse.group.lasso(x, y, group, family="binomial")
 
 cat("\nComputing group-Lasso path...")
-grplasso <- group.lasso(x, y, group, family="binomial")
+grplasso <- group.lasso(x, y, group, family="binomial", optim.method = "fista")
 
 cat("\nComputing cooperative-Lasso path...")
 coolasso <- coop.lasso(x, y, group, family="binomial")

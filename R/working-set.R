@@ -65,8 +65,8 @@ working.set <- function(model, fx, fy, group, lambda, wk, beta, eps, max.it) {
       active[zeroed]  <- FALSE
       beta[zeroed]      <- 0
       fx.zeroed <- switch (model@family,
-                           "gaussian" = fx[zeroed,zeroed],
-                           "binomial" = fx[, zeroed])
+                           "gaussian" = fx[zeroed, zeroed, drop = FALSE],
+                           "binomial" = fx[, zeroed, drop = FALSE])
       fy.zeroed <- switch (model@family,
                            "gaussian" = fy[zeroed],
                            "binomial" = fy)

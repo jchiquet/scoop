@@ -35,8 +35,8 @@ nloglik.gaussian <- function(XtX, Xty, beta) {
 }
 
 nloglik.binomial <-  function(X, y, beta) {
-  eta <- crossprod(t(X), beta)
-  return(- sum( y * eta - log(1 + exp(eta))))
+  eta <- X %*% beta
+  return(-sum( y * eta - log(1 + exp(eta))))
 }
 
 gradient.gaussian <- function(XtX, Xty, beta) {
@@ -44,51 +44,13 @@ gradient.gaussian <- function(XtX, Xty, beta) {
 }
 
 gradient.binomial <- function(X, y, beta) {
-  return(- crossprod(X,y - 1 /(1 + exp(-crossprod(t(X), beta)))))
+  return(-crossprod(X,y - 1 /(1 + exp(-X %*% beta))))
 }
-
-# group.norm <- function(x,g) {
-#   p <- length(x)
-#   K <- length(g)
-#   return(c(.C("groupnorm",
-#               as.integer(p),
-#               as.integer(K),
-#               as.integer(g),
-#               as.double(x),
-#               out=as.double(rep(0,K))
-#               ##,PACKAGE="scoop"
-#               ))$out)
-# }
-
-# group.norm.rep <- function(x,g) {
-#   p <- length(x)
-#   K <- length(g)
-#   return(c(.C("groupnormrep",
-#               as.integer(p),
-#               as.integer(K),
-#               as.integer(g),
-#               as.double(x),
-#               out=as.double(rep(0,p))
-#               #,PACKAGE="scoop"
-#               ))$out)
-# }
-
-# coop.norm <- function(x,g) {
-#   p <- length(x)
-#   K <- length(g)
-#   return(c(.C("coopnorm",
-#               as.integer(p),
-#               as.integer(K),
-#               as.integer(g),
-#               as.double(x),
-#               out=as.double(rep(0,K))
-#               #,PACKAGE="scoop"
-#               ))$out)
-# }
-
-coop.norm.rep <- function(x,g) {
-  return(rep(coop.norm(x,g),g))
-}
+ 
+group.norm     <- function(x, g) {elt_norm_L1L2(x, g)}
+group.norm.rep <- function(x, g) {elt_norm_L1L2_rep(x, g)}
+coop.norm      <- function(x, g) {elt_norm_COOP(x, g)}
+coop.norm.rep  <- function(x, g) {elt_norm_COOP_rep(x,g)}
 
 # proximal.tree.group <- function(u, lambda, tpk, Ks) {
 #   return(c(.C("proximal_tree_grp_standalone",

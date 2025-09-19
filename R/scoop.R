@@ -407,13 +407,14 @@ scoop <- function(x,
   
   ## ======================================================
   ## INTERCEPT TREATMENT
-  beta <- matrix(beta,ncol=ncol(x), nrow=length(lambda))
+  beta <- matrix(beta, ncol=ncol(x), nrow=length(lambda))
   if (intercept) {
     mu <- switch(family,
-                 "gaussian" = y.bar -  beta %*% x.bar,
+                 "gaussian" = y.bar - beta %*% x.bar,
                  "binomial" = mu - apply(t(beta) * x.bar, 2, sum))
     beta <- cbind(mu,beta)    
   }
+
   colnames(beta) <- names
   rownames(beta) <- round(lambda,2)
   
